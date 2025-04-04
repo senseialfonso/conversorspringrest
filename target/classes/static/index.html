@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Conversor de Unidades</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: #f8f9fa;
+            padding: 2rem;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+        }
+        h1 {
+            font-weight: 700;
+            color: #0d6efd;
+        }
+        .card {
+            margin-bottom: 1.5rem;
+            border-radius: 1rem;
+        }
+        .resultado {
+            font-size: 1.25rem;
+            color: #198754;
+            margin-top: 0.5rem;
+        }
+        .btn-primary {
+            border-radius: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center mb-4">Conversor de Unidades</h1>
+
+        <div class="card p-4 shadow-sm">
+            <h4>Temperatura: Celsius a Fahrenheit</h4>
+            <div class="input-group mb-3">
+                <input type="number" id="celsius" class="form-control" placeholder="Introduce °C">
+                <button class="btn btn-primary" onclick="convertirCelsius()">Convertir</button>
+            </div>
+            <div class="resultado" id="resultadoCelsius"></div>
+        </div>
+
+        <div class="card p-4 shadow-sm">
+            <h4>Distancia: Kilómetros a Millas</h4>
+            <div class="input-group mb-3">
+                <input type="number" id="km" class="form-control" placeholder="Introduce km">
+                <button class="btn btn-primary" onclick="convertirKm()">Convertir</button>
+            </div>
+            <div class="resultado" id="resultadoKm"></div>
+        </div>
+    </div>
+
+    <script>
+        function convertirCelsius() {
+            const celsius = document.getElementById('celsius').value;
+            if (celsius === "") return;
+            fetch('/api/convert/celsius-to-fahrenheit?celsius=' + celsius)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('resultadoCelsius').innerText = `${celsius} °C = ${data} °F`;
+                });
+        }
+
+        function convertirKm() {
+            const km = document.getElementById('km').value;
+            if (km === "") return;
+            fetch('/api/convert/kilometers-to-miles?km=' + km)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('resultadoKm').innerText = `${km} km = ${data} mi`;
+                });
+        }
+    </script>
+</body>
+</html>
